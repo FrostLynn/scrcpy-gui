@@ -1,0 +1,23 @@
+{
+  "name": "scrcpy-gui",
+  "version": "1.0.0",
+  "description": "Web control deck and session launcher for scrcpy and ADB",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node test/check.js"
+  },
+  "keywords": [
+    "scrcpy",
+    "adb",
+    "android",
+    "screen-mirroring",
+    "web-gui"
+  ],
+  "author": "Akhdan Rafif Nugraha",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
