@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>scrcpy Control Deck</title>
+  <meta name="description" content="High utility industrial console and session launcher for scrcpy and ADB">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top-nav" role="banner">
+    <div class="nav-brand">
+      <div class="brand-badge" aria-hidden="true">ADB</div>
+      <div class="brand-titles">
+        <h1 class="brand-name">scrcpy deck</h1>
+        <span class="brand-sub">Session Launcher &amp; Device Manager</span>
+      </div>
+    </div>
+
+    <div class="system-status-bar" id="systemStatus" aria-live="polite">
+      <div class="status-pill">
+        <span class="status-label">ADB:</span>
+        <span class="status-val" id="adbStatusVal">Checking...</span>
+      </div>
+      <div class="status-pill">
+        <span class="status-label">scrcpy:</span>
+        <span class="status-val" id="scrcpyStatusVal">Checking...</span>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button type="button" class="btn btn-secondary" id="refreshBtn" title="Refresh devices (Shortcut: R)">
+        <svg class="icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M1.705 8.001a6.3 6.3 0 0 1 10.46-4.681l.884-.884a.75.75 0 0 1 1.28.53v3.784a.75.75 0 0 1-.75.75H9.795a.75.75 0 0 1-.53-1.28l1.01-1.01a4.8 4.8 0 0 0-8.57 2.791.75.75 0 0 1-1.5 0ZM14.295 8a6.3 6.3 0 0 1-10.46 4.68l-.884.885a.75.75 0 0 1-1.28-.53V9.25a.75.75 0 0 1 .75-.75h3.785a.75.75 0 0 1 .53 1.28l-1.01 1.01a4.8 4.8 0 0 0 8.57-2.79.75.75 0 0 1 1.5 0Z"/>
+        </svg>
+        <span>Refresh</span>
+      </button>
+
+      <button type="button" class="btn btn-secondary theme-toggle" id="themeToggleBtn" aria-label="Toggle visual theme">
+        <span id="themeLabel">Light Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="console-body" role="main">
+    <section class="quick-connect-bar" aria-labelledby="connectSectionTitle">
+      <div class="section-tag-group">
+        <span class="section-tag" id="connectSectionTitle">TCP/IP Network Link</span>
+        <span class="section-hint">Connect wireless Android device via Wi-Fi network</span>
+      </div>
+      <form class="connect-form" id="connectForm">
+        <div class="form-group-inline">
+          <label for="connectIp" class="visually-hidden">IP Address</label>
+          <input type="text" id="connectIp" name="ip" class="input-text" placeholder="192.168.1.50" pattern="^(\d{1,3}\.){3}\d{1,3}$" required autocomplete="off" spellcheck="false">
+        </div>
+        <div class="form-group-inline port-group">
+          <label for="connectPort" class="visually-hidden">Port</label>
+          <input type="number" id="connectPort" name="port" class="input-text" value="5555" min="1" max="65535" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="connectSubmitBtn">
+          <span>Connect Device</span>
+        </button>
+      </form>
+    </section>
+
+    <div class="deck-grid">
+      <!-- Left Column: Devices and Active Sessions -->
+      <div class="deck-col-left">
+        <!-- Devices Section -->
+        <section class="panel" aria-labelledby="devicesHeading">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2 id="devicesHeading" class="panel-title">Attached Devices</h2>
+              <span class="counter-badge" id="deviceCounter">0</span>
+            </div>
+            <div class="panel-actions">
+              <button type="button" class="btn btn-sm btn-outline" id="otgLaunchBtn" title="Launch pure OTG keyboard and mouse mode without ADB">
+                OTG Mode
+              </button>
+            </div>
+          </div>
+
+          <div class="panel-content" id="deviceListContainer">
+            <!-- Loading State -->
+            <div class="state-box state-loading" id="deviceLoadingState">
+              <div class="spinner" aria-hidden="true"></div>
+              <p class="state-text">Scanning attached USB and wireless devices...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="state-box state-empty hidden" id="deviceEmptyState">
+              <p class="state-title">No Android devices detected</p>
+              <p class="state-desc">Connect an Android device via USB with USB Debugging enabled, or establish a link using the TCP/IP Network Link above.</p>
+              <div class="state-tips">
+                <p class="tips-heading">Checklist:</p>
+                <ol class="tips-list">
+                  <li>Developer Options enabled on Android device.</li>
+                  <li>USB Debugging activated in settings.</li>
+                  <li>Device authorization prompt accepted on screen.</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Error State -->
+            <div class="state-box state-error hidden" id="deviceErrorState">
+              <p class="state-title">Failed to query ADB daemon</p>
+              <p class="state-desc" id="deviceErrorMessage">Make sure adb binary is installed and running.</p>
+              <button type="button" class="btn btn-sm btn-secondary" id="retryDeviceBtn">Retry Scan</button>
+            </div>
+
+            <!-- Populated Device Cards -->
+            <div class="device-list hidden" id="deviceList" role="list"></div>
+          </div>
+        </section>
+
+        <!-- Active Sessions Section -->
+        <section class="panel" aria-labelledby="sessionsHeading">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2 id="sessionsHeading" class="panel-title">Active scrcpy Sessions</h2>
+              <span class="counter-badge" id="sessionCounter">0</span>
+            </div>
+          </div>
+          <div class="panel-content" id="sessionListContainer">
+            <div class="state-box state-empty" id="sessionEmptyState">
+              <p class="state-text">No active scrcpy sessions running.</p>
+            </div>
+            <div class="session-list hidden" id="sessionList" role="list"></div>
+          </div>
+        </section>
+
+        <!-- Real-time Console Log Stream -->
+        <section class="panel log-panel" aria-labelledby="logHeading">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2 id="logHeading" class="panel-title">Process Activity Log</h2>
+              <span class="status-indicator live-indicator" id="logStreamIndicator" title="Live stream connected">LIVE</span>
+            </div>
+            <div class="panel-actions">
+              <button type="button" class="btn btn-sm btn-outline" id="clearLogsBtn">Clear Log</button>
+            </div>
+          </div>
+          <div class="console-output" id="consoleOutput" role="region" aria-live="polite" tabindex="0">
+            <div class="log-line log-info">[Console] scrcpy-gui initialized. Ready for connections.</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: scrcpy Launch Configuration -->
+      <div class="deck-col-right">
+        <section class="panel launcher-panel" aria-labelledby="launcherHeading">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2 id="launcherHeading" class="panel-title">Launch Configuration</h2>
+            </div>
+            <div class="target-device-indicator">
+              <span class="target-label">Target:</span>
+              <span class="target-val" id="targetDeviceDisplay">No device selected</span>
+            </div>
+          </div>
+
+          <form id="launcherForm" class="launcher-form">
+            <!-- Preset Selector -->
+            <div class="form-section">
+              <span class="form-section-title">Profiles</span>
+              <div class="preset-pill-group" role="radiogroup" aria-label="Configuration Preset">
+                <button type="button" class="preset-btn active" data-preset="default">Default</button>
+                <button type="button" class="preset-btn" data-preset="high-quality">High Quality</button>
+                <button type="button" class="preset-btn" data-preset="low-latency">Low Latency</button>
+                <button type="button" class="preset-btn" data-preset="presentation">Presentation</button>
+                <button type="button" class="preset-btn" data-preset="audio-only">Audio Only</button>
+              </div>
+            </div>
+
+            <!-- Video Stream Settings -->
+            <div class="form-section">
+              <span class="form-section-title">Video Stream</span>
+              <div class="form-row-2">
+                <div class="field-group">
+                  <label for="cfgMaxSize">Max Resolution</label>
+                  <select id="cfgMaxSize" name="maxSize" class="select-field">
+                    <option value="">Native Resolution</option>
+                    <option value="2560">2560 px (2K)</option>
+                    <option value="1920" selected>1920 px (1080p)</option>
+                    <option value="1440">1440 px</option>
+                    <option value="1280">1280 px (720p)</option>
+                    <option value="1024">1024 px</option>
+                    <option value="800">800 px</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="cfgVideoBitRate">Video Bitrate</label>
+                  <select id="cfgVideoBitRate" name="videoBitRate" class="select-field">
+                    <option value="4M">4 Mbps</option>
+                    <option value="8M" selected>8 Mbps (Standard)</option>
+                    <option value="16M">16 Mbps (High)</option>
+                    <option value="24M">24 Mbps (Ultra)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="field-group">
+                  <label for="cfgMaxFps">Max Frame Rate</label>
+                  <select id="cfgMaxFps" name="maxFps" class="select-field">
+                    <option value="">Default (Auto)</option>
+                    <option value="30">30 FPS</option>
+                    <option value="60" selected>60 FPS</option>
+                    <option value="90">90 FPS</option>
+                    <option value="120">120 FPS</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="cfgVideoCodec">Video Codec</label>
+                  <select id="cfgVideoCodec" name="videoCodec" class="select-field">
+                    <option value="h264" selected>H.264 (Default)</option>
+                    <option value="h265">H.265 (HEVC)</option>
+                    <option value="av1">AV1</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="cfgVideoSource">Video Source</label>
+                <select id="cfgVideoSource" name="videoSource" class="select-field">
+                  <option value="display" selected>Device Display</option>
+                  <option value="camera">Device Camera</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Audio Settings -->
+            <div class="form-section">
+              <span class="form-section-title">Audio Stream</span>
+              <div class="form-checkbox-row">
+                <label class="checkbox-label" for="cfgNoAudio">
+                  <input type="checkbox" id="cfgNoAudio" name="noAudio" class="checkbox-input">
+                  <span>Disable Audio Forwarding</span>
+                </label>
+              </div>
+              <div class="form-row-2" id="audioSubFields">
+                <div class="field-group">
+                  <label for="cfgAudioCodec">Audio Codec</label>
+                  <select id="cfgAudioCodec" name="audioCodec" class="select-field">
+                    <option value="opus" selected>Opus (Default)</option>
+                    <option value="aac">AAC</option>
+                    <option value="flac">FLAC</option>
+                    <option value="raw">RAW</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label for="cfgAudioBitRate">Audio Bitrate</label>
+                  <select id="cfgAudioBitRate" name="audioBitRate" class="select-field">
+                    <option value="64K">64 Kbps</option>
+                    <option value="128K" selected>128 Kbps</option>
+                    <option value="192K">192 Kbps</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Control & Display Behavior -->
+            <div class="form-section">
+              <span class="form-section-title">Display &amp; Input Behavior</span>
+              <div class="checkbox-grid">
+                <label class="checkbox-label" for="cfgTurnScreenOff">
+                  <input type="checkbox" id="cfgTurnScreenOff" name="turnScreenOff" class="checkbox-input">
+                  <span>Turn Device Screen Off</span>
+                </label>
+                <label class="checkbox-label" for="cfgStayAwake">
+                  <input type="checkbox" id="cfgStayAwake" name="stayAwake" class="checkbox-input" checked>
+                  <span>Stay Awake (Prevent Sleep)</span>
+                </label>
+                <label class="checkbox-label" for="cfgFullscreen">
+                  <input type="checkbox" id="cfgFullscreen" name="fullscreen" class="checkbox-input">
+                  <span>Fullscreen Window</span>
+                </label>
+                <label class="checkbox-label" for="cfgAlwaysOnTop">
+                  <input type="checkbox" id="cfgAlwaysOnTop" name="alwaysOnTop" class="checkbox-input">
+                  <span>Always On Top</span>
+                </label>
+                <label class="checkbox-label" for="cfgWindowBorderless">
+                  <input type="checkbox" id="cfgWindowBorderless" name="windowBorderless" class="checkbox-input">
+                  <span>Borderless Window</span>
+                </label>
+                <label class="checkbox-label" for="cfgShowTouches">
+                  <input type="checkbox" id="cfgShowTouches" name="showTouches" class="checkbox-input">
+                  <span>Show Touch Points</span>
+                </label>
+                <label class="checkbox-label" for="cfgNoControl">
+                  <input type="checkbox" id="cfgNoControl" name="noControl" class="checkbox-input">
+                  <span>Read-only Mode (No Control)</span>
+                </label>
+                <label class="checkbox-label" for="cfgNoClipboardAutosync">
+                  <input type="checkbox" id="cfgNoClipboardAutosync" name="noClipboardAutosync" class="checkbox-input">
+                  <span>Disable Clipboard Sync</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Recording Options -->
+            <div class="form-section">
+              <span class="form-section-title">Session Recording</span>
+              <div class="form-checkbox-row">
+                <label class="checkbox-label" for="cfgRecord">
+                  <input type="checkbox" id="cfgRecord" name="record" class="checkbox-input">
+                  <span>Record Session to File (MP4)</span>
+                </label>
+              </div>
+              <div class="field-group hidden" id="recordFilenameGroup">
+                <label for="cfgRecordFilename">File Name (Optional)</label>
+                <input type="text" id="cfgRecordFilename" name="recordFilename" class="input-text" placeholder="session_capture.mp4" spellcheck="false">
+              </div>
+            </div>
+
+            <!-- Custom Arguments -->
+            <div class="form-section">
+              <span class="form-section-title">Advanced Arguments</span>
+              <div class="field-group">
+                <label for="cfgCustomArgs">Additional scrcpy flags</label>
+                <input type="text" id="cfgCustomArgs" name="customArgs" class="input-text" placeholder="--window-title=Test --render-driver=opengl" spellcheck="false">
+              </div>
+            </div>
+
+            <!-- Generated Command Preview -->
+            <div class="command-preview-box">
+              <span class="preview-label">Generated Command:</span>
+              <code class="preview-code" id="commandPreview">scrcpy</code>
+            </div>
+
+            <!-- Submit Launcher -->
+            <div class="launcher-actions">
+              <button type="submit" class="btn btn-primary btn-block btn-lg" id="launchScrcpyBtn">
+                <svg class="icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M4 3.5a.5.5 0 0 1 .78-.408l8 4.5a.5.5 0 0 1 0 .816l-8 4.5A.5.5 0 0 1 4 12.5v-9Z"/>
+                </svg>
+                <span>Launch scrcpy Session</span>
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Device Details & Actions Modal -->
+  <div class="modal-backdrop hidden" id="deviceModal" role="dialog" aria-modal="true" aria-labelledby="modalDeviceTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDeviceTitle">Device Overview</h2>
+        <button type="button" class="btn-close" id="closeModalBtn" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body" id="modalDeviceBody">
+        <div class="state-box state-loading" id="modalLoadingState">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="state-text">Querying hardware specs and battery status...</p>
+        </div>
+        <div class="modal-details-grid hidden" id="modalDetailsContent">
+          <div class="spec-tile">
+            <span class="spec-label">Serial</span>
+            <span class="spec-val" id="specSerial">-</span>
+          </div>
+          <div class="spec-tile">
+            <span class="spec-label">Model</span>
+            <span class="spec-val" id="specModel">-</span>
+          </div>
+          <div class="spec-tile">
+            <span class="spec-label">Android Release</span>
+            <span class="spec-val" id="specAndroidVer">-</span>
+          </div>
+          <div class="spec-tile">
+            <span class="spec-label">Display Resolution</span>
+            <span class="spec-val" id="specResolution">-</span>
+          </div>
+          <div class="spec-tile">
+            <span class="spec-label">Battery Level</span>
+            <span class="spec-val" id="specBattery">-</span>
+          </div>
+          <div class="spec-tile">
+            <span class="spec-label">Wi-Fi IP</span>
+            <span class="spec-val" id="specIp">-</span>
+          </div>
+        </div>
+
+        <div class="modal-hardware-actions" id="modalHardwareActions">
+          <span class="modal-subtitle">Quick ADB Controls:</span>
+          <div class="hardware-buttons">
+            <button type="button" class="btn btn-sm btn-secondary" data-keyevent="26" title="Press Power Key">Power</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-keyevent="3" title="Press Home Key">Home</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-keyevent="4" title="Press Back Key">Back</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-keyevent="187" title="Press App Switch Key">Recent Apps</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-keyevent="24" title="Volume Up">Vol +</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-keyevent="25" title="Volume Down">Vol -</button>
+          </div>
+          <div class="hardware-power-ops">
+            <button type="button" class="btn btn-sm btn-secondary" id="modalTakeScreenshotBtn">Capture Screenshot</button>
+            <button type="button" class="btn btn-sm btn-outline" id="modalSwitchTcpipBtn">Enable Wi-Fi Mode (Port 5555)</button>
+            <button type="button" class="btn btn-sm btn-danger" id="modalRebootBtn">Reboot Device</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modalDismissBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot Preview Modal -->
+  <div class="modal-backdrop hidden" id="screenshotModal" role="dialog" aria-modal="true" aria-labelledby="screenshotModalTitle">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-header">
+        <h2 class="modal-title" id="screenshotModalTitle">Device Screenshot</h2>
+        <button type="button" class="btn-close" id="closeScreenshotModalBtn" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body text-center" id="screenshotModalBody">
+        <div class="screenshot-wrapper">
+          <img id="screenshotImg" alt="Device screen capture" class="screenshot-view">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a id="downloadScreenshotBtn" class="btn btn-primary" download="screenshot.png">Download Image</a>
+        <button type="button" class="btn btn-secondary" id="dismissScreenshotBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
