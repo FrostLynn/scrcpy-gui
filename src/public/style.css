@@ -14,6 +14,7 @@
   --accent-blue-hover: #388bfd;
   --accent-danger: #da3633;
   --accent-danger-hover: #f85149;
+  --accent-warning: #d29922;
   --focus-ring: #388bfd;
   --code-bg: #090c10;
   --badge-bg: #21262d;
@@ -36,6 +37,7 @@
   --accent-blue-hover: #218bff;
   --accent-danger: #cf222e;
   --accent-danger-hover: #a40e26;
+  --accent-warning: #9a6700;
   --focus-ring: #0969da;
   --code-bg: #eaeff4;
   --badge-bg: #eaeef2;
@@ -55,7 +57,7 @@ body {
   line-height: 1.5;
   color: var(--text-primary);
   background-color: var(--bg-base);
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -150,6 +152,29 @@ body {
   font-size: 12px;
 }
 
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background-color 150ms ease;
+}
+
+.status-dot-checking {
+  background-color: var(--text-muted);
+}
+
+.status-dot-online {
+  background-color: var(--accent-green);
+  box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.25);
+}
+
+.status-dot-offline {
+  background-color: var(--accent-danger);
+  box-shadow: 0 0 0 2px rgba(218, 54, 51, 0.25);
+}
+
 .status-label {
   color: var(--text-secondary);
   font-weight: 500;
@@ -165,6 +190,12 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* Console Body */
@@ -210,12 +241,54 @@ body {
 .connect-form {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
+.form-group-inline {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 150ms ease;
+}
+
+.form-group-inline:focus-within {
+  border-color: var(--focus-ring);
+}
+
+.field-badge {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 10px;
+  color: var(--text-secondary);
+  background-color: var(--panel-surface-sub);
+  border-right: 1px solid var(--border-color);
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.form-group-inline .input-text {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  min-height: 42px;
+  padding: 8px 12px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.form-group-inline .input-text:focus {
+  border-color: transparent;
+  outline: none;
+}
+
 .port-group {
-  width: 100px;
+  width: 140px;
 }
 
 /* Grid Layout */
@@ -375,6 +448,16 @@ body {
   gap: 12px;
 }
 
+.device-filter-bar {
+  margin-bottom: 12px;
+}
+
+.input-sm {
+  min-height: 38px;
+  font-size: 12px;
+  padding: 6px 12px;
+}
+
 .device-card {
   padding: 14px 16px;
   background-color: var(--panel-surface-sub);
@@ -383,11 +466,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: border-color 150ms ease;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.device-card:hover {
+  border-color: var(--text-muted);
 }
 
 .device-card.selected {
   border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue);
 }
 
 .device-card-header {
@@ -718,7 +806,14 @@ body {
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+}
+
+.command-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .preview-label {
@@ -726,6 +821,13 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text-secondary);
+}
+
+.btn-copy-cmd {
+  min-height: 28px;
+  padding: 2px 8px;
+  font-size: 11px;
+  border-radius: 3px;
 }
 
 .preview-code {
@@ -751,7 +853,11 @@ body {
   cursor: pointer;
   min-height: 44px;
   text-decoration: none;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 100ms ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 .btn:disabled {
@@ -1035,5 +1141,14 @@ body {
   .checkbox-grid,
   .modal-details-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

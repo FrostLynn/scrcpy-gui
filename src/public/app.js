@@ -119,14 +119,20 @@ const dom = {
   html: document.documentElement,
   themeToggleBtn: document.getElementById('themeToggleBtn'),
   themeLabel: document.getElementById('themeLabel'),
+  themeIconSun: document.getElementById('themeIconSun'),
+  themeIconMoon: document.getElementById('themeIconMoon'),
   refreshBtn: document.getElementById('refreshBtn'),
+  adbStatusDot: document.getElementById('adbStatusDot'),
   adbStatusVal: document.getElementById('adbStatusVal'),
+  scrcpyStatusDot: document.getElementById('scrcpyStatusDot'),
   scrcpyStatusVal: document.getElementById('scrcpyStatusVal'),
   connectForm: document.getElementById('connectForm'),
   connectIp: document.getElementById('connectIp'),
   connectPort: document.getElementById('connectPort'),
   connectSubmitBtn: document.getElementById('connectSubmitBtn'),
   deviceCounter: document.getElementById('deviceCounter'),
+  deviceFilterBar: document.getElementById('deviceFilterBar'),
+  deviceSearchInput: document.getElementById('deviceSearchInput'),
   deviceLoadingState: document.getElementById('deviceLoadingState'),
   deviceEmptyState: document.getElementById('deviceEmptyState'),
   deviceErrorState: document.getElementById('deviceErrorState'),
@@ -165,6 +171,8 @@ const dom = {
   cfgRecordFilename: document.getElementById('cfgRecordFilename'),
   cfgCustomArgs: document.getElementById('cfgCustomArgs'),
   commandPreview: document.getElementById('commandPreview'),
+  copyCommandBtn: document.getElementById('copyCommandBtn'),
+  copyCommandLabel: document.getElementById('copyCommandLabel'),
   launchScrcpyBtn: document.getElementById('launchScrcpyBtn'),
   // Modals
   deviceModal: document.getElementById('deviceModal'),
@@ -206,6 +214,15 @@ function applyTheme(theme) {
   state.theme = theme;
   dom.html.setAttribute('data-theme', theme);
   dom.themeLabel.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  if (dom.themeIconSun && dom.themeIconMoon) {
+    if (theme === 'dark') {
+      dom.themeIconSun.classList.remove('hidden');
+      dom.themeIconMoon.classList.add('hidden');
+    } else {
+      dom.themeIconSun.classList.add('hidden');
+      dom.themeIconMoon.classList.remove('hidden');
+    }
+  }
   localStorage.setItem('scrcpy_gui_theme', theme);
 }
 
@@ -221,21 +238,27 @@ async function fetchSystemStatus() {
     if (data.adb && data.adb.installed) {
       dom.adbStatusVal.textContent = `v${data.adb.version}`;
       dom.adbStatusVal.style.color = 'var(--text-primary)';
+      if (dom.adbStatusDot) dom.adbStatusDot.className = 'status-dot status-dot-online';
     } else {
       dom.adbStatusVal.textContent = 'Missing';
       dom.adbStatusVal.style.color = 'var(--accent-danger)';
+      if (dom.adbStatusDot) dom.adbStatusDot.className = 'status-dot status-dot-offline';
     }
 
     if (data.scrcpy && data.scrcpy.installed) {
       dom.scrcpyStatusVal.textContent = `v${data.scrcpy.version}`;
       dom.scrcpyStatusVal.style.color = 'var(--text-primary)';
+      if (dom.scrcpyStatusDot) dom.scrcpyStatusDot.className = 'status-dot status-dot-online';
     } else {
       dom.scrcpyStatusVal.textContent = 'Missing';
       dom.scrcpyStatusVal.style.color = 'var(--accent-danger)';
+      if (dom.scrcpyStatusDot) dom.scrcpyStatusDot.className = 'status-dot status-dot-offline';
     }
   } catch {
     dom.adbStatusVal.textContent = 'Offline';
     dom.scrcpyStatusVal.textContent = 'Offline';
+    if (dom.adbStatusDot) dom.adbStatusDot.className = 'status-dot status-dot-offline';
+    if (dom.scrcpyStatusDot) dom.scrcpyStatusDot.className = 'status-dot status-dot-offline';
   }
 }
 
@@ -335,7 +358,25 @@ function renderDevices() {
   }
 
   attachDeviceCardListeners();
+  if (dom.deviceFilterBar) {
+    dom.deviceFilterBar.classList.toggle('hidden', state.devices.length <= 1);
+  }
+  applyDeviceFilter();
   updateCommandPreview();
+}
+
+function applyDeviceFilter() {
+  if (!dom.deviceSearchInput) return;
+  const q = dom.deviceSearchInput.value.toLowerCase().trim();
+  const cards = dom.deviceList.querySelectorAll('.device-card');
+  cards.forEach(card => {
+    if (!q) {
+      card.classList.remove('hidden');
+    } else {
+      const text = card.textContent.toLowerCase();
+      card.classList.toggle('hidden', !text.includes(q));
+    }
+  });
 }
 
 function attachDeviceCardListeners() {
@@ -855,6 +896,27 @@ dom.refreshBtn.addEventListener('click', () => {
 dom.retryDeviceBtn.addEventListener('click', () => {
   fetchDevices();
 });
+
+if (dom.deviceSearchInput) {
+  dom.deviceSearchInput.addEventListener('input', applyDeviceFilter);
+}
+
+if (dom.copyCommandBtn) {
+  dom.copyCommandBtn.addEventListener('click', async () => {
+    const cmdText = dom.commandPreview.textContent.trim();
+    if (!cmdText) return;
+    try {
+      await navigator.clipboard.writeText(cmdText);
+      if (dom.copyCommandLabel) dom.copyCommandLabel.textContent = 'Copied!';
+      showToast('Command copied to clipboard', 'info');
+      setTimeout(() => {
+        if (dom.copyCommandLabel) dom.copyCommandLabel.textContent = 'Copy';
+      }, 2000);
+    } catch {
+      showToast('Failed to copy to clipboard', 'error');
+    }
+  });
+}
 
 function escapeHtml(str) {
   if (!str) return '';

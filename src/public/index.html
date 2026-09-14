@@ -19,10 +19,12 @@
 
     <div class="system-status-bar" id="systemStatus" aria-live="polite">
       <div class="status-pill">
+        <span class="status-dot status-dot-checking" id="adbStatusDot" aria-hidden="true"></span>
         <span class="status-label">ADB:</span>
         <span class="status-val" id="adbStatusVal">Checking...</span>
       </div>
       <div class="status-pill">
+        <span class="status-dot status-dot-checking" id="scrcpyStatusDot" aria-hidden="true"></span>
         <span class="status-label">scrcpy:</span>
         <span class="status-val" id="scrcpyStatusVal">Checking...</span>
       </div>
@@ -37,6 +39,12 @@
       </button>
 
       <button type="button" class="btn btn-secondary theme-toggle" id="themeToggleBtn" aria-label="Toggle visual theme">
+        <svg class="icon theme-icon-sun hidden" id="themeIconSun" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM8 0a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 8 0ZM8 13a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 13ZM2.343 2.343a.75.75 0 0 1 1.061 0l1.06 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.061Zm9.193 9.193a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 0 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061ZM0 8a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H.75A.75.75 0 0 1 0 8Zm13 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5A.75.75 0 0 1 13 8ZM2.343 13.657a.75.75 0 0 1 0-1.06l1.06-1.061a.75.75 0 1 1 1.061 1.06l-1.06 1.061a.75.75 0 0 1-1.061 0Zm9.193-9.193a.75.75 0 0 1 0-1.06l1.061-1.061a.75.75 0 0 1 1.06-1.06l-1.06 1.061a.75.75 0 0 1-1.061 0Z"/>
+        </svg>
+        <svg class="icon theme-icon-moon" id="themeIconMoon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M9.598 1.591a.75.75 0 0 1 .785-.175 7 7 0 1 1-8.967 8.967.75.75 0 0 1 .961-.96 5.5 5.5 0 0 0 7.046-7.046.75.75 0 0 1 .175-.786Z"/>
+        </svg>
         <span id="themeLabel">Light Mode</span>
       </button>
     </div>
@@ -50,11 +58,11 @@
       </div>
       <form class="connect-form" id="connectForm">
         <div class="form-group-inline">
-          <label for="connectIp" class="visually-hidden">IP Address</label>
+          <label for="connectIp" class="field-badge">IP</label>
           <input type="text" id="connectIp" name="ip" class="input-text" placeholder="192.168.1.50" pattern="^(\d{1,3}\.){3}\d{1,3}$" required autocomplete="off" spellcheck="false">
         </div>
         <div class="form-group-inline port-group">
-          <label for="connectPort" class="visually-hidden">Port</label>
+          <label for="connectPort" class="field-badge">Port</label>
           <input type="number" id="connectPort" name="port" class="input-text" value="5555" min="1" max="65535" required>
         </div>
         <button type="submit" class="btn btn-primary" id="connectSubmitBtn">
@@ -81,6 +89,12 @@
           </div>
 
           <div class="panel-content" id="deviceListContainer">
+            <!-- Search & Filter Bar -->
+            <div class="device-filter-bar hidden" id="deviceFilterBar">
+              <label for="deviceSearchInput" class="visually-hidden">Filter devices</label>
+              <input type="text" id="deviceSearchInput" class="input-text input-sm" placeholder="Filter devices by model, serial, or type..." autocomplete="off" spellcheck="false">
+            </div>
+
             <!-- Loading State -->
             <div class="state-box state-loading" id="deviceLoadingState">
               <div class="spinner" aria-hidden="true"></div>
@@ -324,7 +338,16 @@
 
             <!-- Generated Command Preview -->
             <div class="command-preview-box">
-              <span class="preview-label">Generated Command:</span>
+              <div class="command-preview-header">
+                <span class="preview-label">Generated Command:</span>
+                <button type="button" class="btn btn-sm btn-outline btn-copy-cmd" id="copyCommandBtn" title="Copy command to clipboard">
+                  <svg class="icon" viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
+                    <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
+                  </svg>
+                  <span id="copyCommandLabel">Copy</span>
+                </button>
+              </div>
               <code class="preview-code" id="commandPreview">scrcpy</code>
             </div>
 
