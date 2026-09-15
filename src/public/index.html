@@ -79,10 +79,11 @@
     </section>
 
     <div class="deck-grid">
-      <!-- Left Column: Devices, Sessions, and Process Activity -->
-      <div class="deck-col-left">
-        <!-- Devices Section -->
-        <section class="panel" aria-labelledby="devicesHeading">
+      <!-- Top Row: Devices/Sessions (Left) and Console Log (Right) -->
+      <div class="deck-top-row">
+        <div class="deck-col-devices">
+          <!-- Devices Section -->
+          <section class="panel" aria-labelledby="devicesHeading">
           <div class="panel-header">
             <div class="panel-title-group">
               <h2 id="devicesHeading" class="panel-title">Attached Devices</h2>
@@ -149,7 +150,9 @@
             <div class="session-list hidden" id="sessionList" role="list"></div>
           </div>
         </section>
+      </div>
 
+      <div class="deck-col-log">
         <!-- Real-time Console Log Stream -->
         <section class="panel log-panel" aria-labelledby="logHeading">
           <div class="panel-header">
@@ -166,10 +169,11 @@
           </div>
         </section>
       </div>
+    </div>
 
-      <!-- Right Column: scrcpy Launch Configuration -->
-      <div class="deck-col-right">
-        <section class="panel launcher-panel" aria-labelledby="launcherHeading">
+    <!-- Bottom Row: scrcpy Launch Configuration (Full Width) -->
+    <div class="deck-bottom-row">
+      <section class="panel launcher-panel" aria-labelledby="launcherHeading">
           <div class="panel-header">
             <div class="panel-title-group">
               <h2 id="launcherHeading" class="panel-title">Launch Configuration</h2>

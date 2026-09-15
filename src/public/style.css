@@ -403,19 +403,45 @@ body {
   width: 140px;
 }
 
-/* Two-Column Deck Layout */
+/* Deck Grid Layout: Top Row (Devices/Sessions + Logs), Bottom Row (Launch Config) */
 .deck-grid {
-  display: grid;
-  grid-template-columns: minmax(320px, 1fr) minmax(380px, 480px);
-  gap: 24px;
-  align-items: start;
-}
-
-.deck-col-left,
-.deck-col-right {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.deck-top-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.deck-col-devices {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.deck-col-log {
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-col-log .log-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-col-log .console-output {
+  flex: 1;
+  height: 100%;
+  min-height: 280px;
+}
+
+.deck-bottom-row {
+  width: 100%;
 }
 
 /* M3 Card Panels */
@@ -899,8 +925,8 @@ body {
 
 .checkbox-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
 }
 
 .form-checkbox-row {
@@ -1264,7 +1290,7 @@ body {
 
 /* Responsive Rules */
 @media (max-width: 1024px) {
-  .deck-grid {
+  .deck-top-row {
     grid-template-columns: 1fr;
   }
 }
