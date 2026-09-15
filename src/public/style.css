@@ -423,6 +423,16 @@ body {
   gap: 24px;
 }
 
+.deck-col-devices .devices-sessions-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-sub-header {
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
 .deck-col-log {
   display: flex;
   flex-direction: column;
