@@ -444,6 +444,10 @@ body {
   height: 100%;
 }
 
+.split-panel-col .panel-header {
+  min-height: 64px;
+}
+
 .split-panel-col .panel-content {
   flex: 1;
 }
@@ -488,6 +492,8 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 14px 20px;
+  min-height: 64px;
+  box-sizing: border-box;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
   background-color: var(--md-sys-color-surface-container);
 }
