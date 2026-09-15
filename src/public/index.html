@@ -82,70 +82,77 @@
       <!-- Top Row: Devices/Sessions (Left) and Console Log (Right) -->
       <div class="deck-top-row">
         <div class="deck-col-devices">
-          <!-- Combined Devices and Active Sessions Section -->
+          <!-- Combined Devices and Active Sessions Section (Side-by-Side in Same Panel) -->
           <section class="panel devices-sessions-panel" aria-labelledby="devicesHeading">
-            <div class="panel-header">
-              <div class="panel-title-group">
-                <h2 id="devicesHeading" class="panel-title">Attached Devices</h2>
-                <span class="counter-badge" id="deviceCounter">0</span>
-              </div>
-              <div class="panel-actions">
-                <button type="button" class="btn btn-sm btn-outline" id="otgLaunchBtn" title="Launch pure OTG keyboard and mouse mode without ADB">
-                  OTG Mode
-                </button>
-              </div>
-            </div>
+            <div class="split-panel-row">
+              <!-- Sub-column: Attached Devices -->
+              <div class="split-panel-col">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <h2 id="devicesHeading" class="panel-title">Attached Devices</h2>
+                    <span class="counter-badge" id="deviceCounter">0</span>
+                  </div>
+                  <div class="panel-actions">
+                    <button type="button" class="btn btn-sm btn-outline" id="otgLaunchBtn" title="Launch pure OTG keyboard and mouse mode without ADB">
+                      OTG Mode
+                    </button>
+                  </div>
+                </div>
 
-            <div class="panel-content" id="deviceListContainer">
-              <!-- Search & Filter Bar -->
-              <div class="device-filter-bar hidden" id="deviceFilterBar">
-                <label for="deviceSearchInput" class="visually-hidden">Filter devices</label>
-                <input type="text" id="deviceSearchInput" class="input-text input-sm" placeholder="Filter devices by model, serial, or type..." autocomplete="off" spellcheck="false">
-              </div>
+                <div class="panel-content" id="deviceListContainer">
+                  <!-- Search & Filter Bar -->
+                  <div class="device-filter-bar hidden" id="deviceFilterBar">
+                    <label for="deviceSearchInput" class="visually-hidden">Filter devices</label>
+                    <input type="text" id="deviceSearchInput" class="input-text input-sm" placeholder="Filter devices by model, serial, or type..." autocomplete="off" spellcheck="false">
+                  </div>
 
-              <!-- Loading State -->
-              <div class="state-box state-loading" id="deviceLoadingState">
-                <div class="spinner" aria-hidden="true"></div>
-                <p class="state-text">Scanning attached USB and wireless devices...</p>
-              </div>
+                  <!-- Loading State -->
+                  <div class="state-box state-loading" id="deviceLoadingState">
+                    <div class="spinner" aria-hidden="true"></div>
+                    <p class="state-text">Scanning attached USB and wireless devices...</p>
+                  </div>
 
-              <!-- Empty State -->
-              <div class="state-box state-empty hidden" id="deviceEmptyState">
-                <p class="state-title">No Android devices detected</p>
-                <p class="state-desc">Connect an Android device via USB with USB Debugging enabled, or establish a link using the TCP/IP Network Link above.</p>
-                <div class="state-tips">
-                  <p class="tips-heading">Checklist:</p>
-                  <ol class="tips-list">
-                    <li>Developer Options enabled on Android device.</li>
-                    <li>USB Debugging activated in settings.</li>
-                    <li>Device authorization prompt accepted on screen.</li>
-                  </ol>
+                  <!-- Empty State -->
+                  <div class="state-box state-empty hidden" id="deviceEmptyState">
+                    <p class="state-title">No Android devices detected</p>
+                    <p class="state-desc">Connect an Android device via USB with USB Debugging enabled, or establish a link using the TCP/IP Network Link above.</p>
+                    <div class="state-tips">
+                      <p class="tips-heading">Checklist:</p>
+                      <ol class="tips-list">
+                        <li>Developer Options enabled on Android device.</li>
+                        <li>USB Debugging activated in settings.</li>
+                        <li>Device authorization prompt accepted on screen.</li>
+                      </ol>
+                    </div>
+                  </div>
+
+                  <!-- Error State -->
+                  <div class="state-box state-error hidden" id="deviceErrorState">
+                    <p class="state-title">Failed to query ADB daemon</p>
+                    <p class="state-desc" id="deviceErrorMessage">Make sure adb binary is installed and running.</p>
+                    <button type="button" class="btn btn-sm btn-secondary" id="retryDeviceBtn">Retry Scan</button>
+                  </div>
+
+                  <!-- Populated Device Cards -->
+                  <div class="device-list hidden" id="deviceList" role="list"></div>
                 </div>
               </div>
 
-              <!-- Error State -->
-              <div class="state-box state-error hidden" id="deviceErrorState">
-                <p class="state-title">Failed to query ADB daemon</p>
-                <p class="state-desc" id="deviceErrorMessage">Make sure adb binary is installed and running.</p>
-                <button type="button" class="btn btn-sm btn-secondary" id="retryDeviceBtn">Retry Scan</button>
+              <!-- Sub-column: Active Sessions -->
+              <div class="split-panel-col split-panel-border-left">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <h3 id="sessionsHeading" class="panel-title">Active scrcpy Sessions</h3>
+                    <span class="counter-badge" id="sessionCounter">0</span>
+                  </div>
+                </div>
+                <div class="panel-content" id="sessionListContainer">
+                  <div class="state-box state-empty" id="sessionEmptyState">
+                    <p class="state-text">No active scrcpy sessions running.</p>
+                  </div>
+                  <div class="session-list hidden" id="sessionList" role="list"></div>
+                </div>
               </div>
-
-              <!-- Populated Device Cards -->
-              <div class="device-list hidden" id="deviceList" role="list"></div>
-            </div>
-
-            <!-- Active Sessions Section within Same Panel -->
-            <div class="panel-header panel-sub-header">
-              <div class="panel-title-group">
-                <h3 id="sessionsHeading" class="panel-title">Active scrcpy Sessions</h3>
-                <span class="counter-badge" id="sessionCounter">0</span>
-              </div>
-            </div>
-            <div class="panel-content" id="sessionListContainer">
-              <div class="state-box state-empty" id="sessionEmptyState">
-                <p class="state-text">No active scrcpy sessions running.</p>
-              </div>
-              <div class="session-list hidden" id="sessionList" role="list"></div>
             </div>
           </section>
         </div>
