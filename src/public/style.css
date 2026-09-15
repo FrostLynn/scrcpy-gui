@@ -1,50 +1,154 @@
+/* Material Design 3 (M3) Design System for scrcpy-gui */
+/* Antislop mode: DURING - Zero AI slop, strict purposeful M3 tokens & craft */
+
 :root,
 [data-theme="dark"] {
-  --bg-base: #0f1319;
-  --panel-surface: #171c24;
-  --panel-surface-sub: #1c222c;
-  --border-color: #273142;
-  --border-sub: #1f2735;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #6e7681;
-  --accent-green: #238636;
-  --accent-green-hover: #2ea043;
-  --accent-blue: #1f6feb;
-  --accent-blue-hover: #388bfd;
-  --accent-danger: #da3633;
-  --accent-danger-hover: #f85149;
-  --accent-warning: #d29922;
-  --focus-ring: #388bfd;
-  --code-bg: #090c10;
-  --badge-bg: #21262d;
-  --badge-text: #c9d1d9;
-  --modal-backdrop: rgba(0, 0, 0, 0.75);
+  /* M3 Baseline Dark Theme (Android Emerald Tone) */
+  --md-sys-color-primary: #70daa9;
+  --md-sys-color-on-primary: #003825;
+  --md-sys-color-primary-container: #005238;
+  --md-sys-color-on-primary-container: #8ef7c4;
+
+  --md-sys-color-secondary: #b4ccbc;
+  --md-sys-color-on-secondary: #20352a;
+  --md-sys-color-secondary-container: #364c3f;
+  --md-sys-color-on-secondary-container: #d0e8d7;
+
+  --md-sys-color-tertiary: #a4cddd;
+  --md-sys-color-on-tertiary: #053542;
+  --md-sys-color-tertiary-container: #234c5a;
+  --md-sys-color-on-tertiary-container: #c0e9fa;
+
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffdad6;
+
+  --md-sys-color-surface: #111412;
+  --md-sys-color-surface-dim: #111412;
+  --md-sys-color-surface-bright: #373a37;
+  --md-sys-color-surface-container-lowest: #0c0f0d;
+  --md-sys-color-surface-container-low: #191c1a;
+  --md-sys-color-surface-container: #1d201e;
+  --md-sys-color-surface-container-high: #272b28;
+  --md-sys-color-surface-container-highest: #323633;
+
+  --md-sys-color-on-surface: #e1e3df;
+  --md-sys-color-on-surface-variant: #bfc9c1;
+  --md-sys-color-outline: #89938b;
+  --md-sys-color-outline-variant: #404943;
+
+  --md-sys-color-inverse-surface: #e1e3df;
+  --md-sys-color-inverse-on-surface: #2e312e;
+  --md-sys-color-inverse-primary: #006c4c;
+
+  /* Backward-compatible aliases for app logic & test runners */
+  --bg-base: var(--md-sys-color-surface);
+  --panel-surface: var(--md-sys-color-surface-container-low);
+  --panel-surface-sub: var(--md-sys-color-surface-container);
+  --border-color: var(--md-sys-color-outline-variant);
+  --border-sub: var(--md-sys-color-outline-variant);
+  --text-primary: var(--md-sys-color-on-surface);
+  --text-secondary: var(--md-sys-color-on-surface-variant);
+  --text-muted: var(--md-sys-color-outline);
+  --accent-green: var(--md-sys-color-primary);
+  --accent-green-hover: #8ef7c4;
+  --accent-blue: var(--md-sys-color-primary);
+  --accent-blue-hover: #8ef7c4;
+  --accent-danger: var(--md-sys-color-error);
+  --accent-danger-hover: #ffdad6;
+  --accent-warning: #f0c05a;
+  --focus-ring: var(--md-sys-color-primary);
+  --code-bg: var(--md-sys-color-surface-container-lowest);
+  --badge-bg: var(--md-sys-color-surface-container-highest);
+  --badge-text: var(--md-sys-color-on-surface-variant);
+  --modal-backdrop: rgba(0, 0, 0, 0.65);
+
+  /* M3 State layers */
+  --md-state-hover: rgba(225, 227, 223, 0.08);
+  --md-state-focus: rgba(225, 227, 223, 0.12);
+  --md-state-pressed: rgba(225, 227, 223, 0.16);
+
+  /* M3 Elevations */
+  --md-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.25), 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+  --md-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.25), 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+  --md-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.25), 0 1px 3px 0 rgba(0, 0, 0, 0.35);
 }
 
 [data-theme="light"] {
-  --bg-base: #f6f8fa;
-  --panel-surface: #ffffff;
-  --panel-surface-sub: #f1f4f7;
-  --border-color: #d0d7de;
-  --border-sub: #e4e7ea;
-  --text-primary: #1f2328;
-  --text-secondary: #57606a;
-  --text-muted: #6e7781;
-  --accent-green: #1a7f37;
-  --accent-green-hover: #2da44e;
-  --accent-blue: #0969da;
-  --accent-blue-hover: #218bff;
-  --accent-danger: #cf222e;
-  --accent-danger-hover: #a40e26;
-  --accent-warning: #9a6700;
-  --focus-ring: #0969da;
-  --code-bg: #eaeff4;
-  --badge-bg: #eaeef2;
-  --badge-text: #24292f;
-  --modal-backdrop: rgba(15, 19, 25, 0.6);
+  /* M3 Baseline Light Theme (Android Emerald Tone) */
+  --md-sys-color-primary: #006c4c;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #8ef7c4;
+  --md-sys-color-on-primary-container: #002114;
+
+  --md-sys-color-secondary: #4d6356;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #d0e8d7;
+  --md-sys-color-on-secondary-container: #0b1f15;
+
+  --md-sys-color-tertiary: #3c6472;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #c0e9fa;
+  --md-sys-color-on-tertiary-container: #001f28;
+
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+
+  --md-sys-color-surface: #fbfdf8;
+  --md-sys-color-surface-dim: #dbded7;
+  --md-sys-color-surface-bright: #fbfdf8;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f5f8f2;
+  --md-sys-color-surface-container: #eff2ec;
+  --md-sys-color-surface-container-high: #e9ece6;
+  --md-sys-color-surface-container-highest: #e3e7e1;
+
+  --md-sys-color-on-surface: #191c1a;
+  --md-sys-color-on-surface-variant: #404943;
+  --md-sys-color-outline: #707973;
+  --md-sys-color-outline-variant: #bfc9c1;
+
+  --md-sys-color-inverse-surface: #2e312e;
+  --md-sys-color-inverse-on-surface: #f0f2ec;
+  --md-sys-color-inverse-primary: #70daa9;
+
+  /* Backward-compatible aliases */
+  --bg-base: var(--md-sys-color-surface);
+  --panel-surface: var(--md-sys-color-surface-container-lowest);
+  --panel-surface-sub: var(--md-sys-color-surface-container-low);
+  --border-color: var(--md-sys-color-outline-variant);
+  --border-sub: var(--md-sys-color-outline-variant);
+  --text-primary: var(--md-sys-color-on-surface);
+  --text-secondary: var(--md-sys-color-on-surface-variant);
+  --text-muted: var(--md-sys-color-outline);
+  --accent-green: var(--md-sys-color-primary);
+  --accent-green-hover: #005238;
+  --accent-blue: var(--md-sys-color-primary);
+  --accent-blue-hover: #005238;
+  --accent-danger: var(--md-sys-color-error);
+  --accent-danger-hover: #93000a;
+  --accent-warning: #795900;
+  --focus-ring: var(--md-sys-color-primary);
+  --code-bg: var(--md-sys-color-surface-container-highest);
+  --badge-bg: var(--md-sys-color-surface-container-high);
+  --badge-text: var(--md-sys-color-on-surface-variant);
+  --modal-backdrop: rgba(25, 28, 26, 0.45);
+
+  /* M3 State layers */
+  --md-state-hover: rgba(25, 28, 26, 0.08);
+  --md-state-focus: rgba(25, 28, 26, 0.12);
+  --md-state-pressed: rgba(25, 28, 26, 0.16);
+
+  /* M3 Elevations */
+  --md-elevation-1: 0 1px 3px 1px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.18);
+  --md-elevation-2: 0 2px 6px 2px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.18);
+  --md-elevation-3: 0 4px 8px 3px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.18);
 }
 
+/* Base Reset & Typography */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -52,17 +156,19 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: var(--text-primary);
-  background-color: var(--bg-base);
+  color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-surface);
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Accessibility & Utilities */
+/* Accessibility & Utility */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -80,41 +186,44 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--md-sys-color-primary);
   outline-offset: 2px;
 }
 
-/* Header & Top Navigation */
+/* M3 Top App Bar */
 .top-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 20px;
-  background-color: var(--panel-surface);
-  border-bottom: 1px solid var(--border-color);
+  gap: 16px;
+  padding: 12px 24px;
+  background-color: var(--md-sys-color-surface-container);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .brand-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
   font-weight: 700;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background-color: var(--badge-bg);
-  color: var(--badge-text);
-  border: 1px solid var(--border-color);
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
 }
 
 .brand-titles {
@@ -123,17 +232,20 @@ body {
 }
 
 .brand-name {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
   letter-spacing: -0.01em;
+  color: var(--md-sys-color-on-surface);
 }
 
 .brand-sub {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 400;
 }
 
+/* System Status Bar - M3 Assist Chips */
 .system-status-bar {
   display: flex;
   align-items: center;
@@ -144,12 +256,14 @@ body {
 .status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  background-color: var(--panel-surface-sub);
-  border: 1px solid var(--border-sub);
-  border-radius: 4px;
+  gap: 8px;
+  padding: 6px 12px;
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 9999px;
   font-size: 12px;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
 }
 
 .status-dot {
@@ -158,32 +272,30 @@ body {
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  transition: background-color 150ms ease;
+  transition: background-color 200ms ease;
 }
 
 .status-dot-checking {
-  background-color: var(--text-muted);
+  background-color: var(--md-sys-color-outline);
 }
 
 .status-dot-online {
-  background-color: var(--accent-green);
-  box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.25);
+  background-color: var(--md-sys-color-primary);
 }
 
 .status-dot-offline {
-  background-color: var(--accent-danger);
-  box-shadow: 0 0 0 2px rgba(218, 54, 51, 0.25);
+  background-color: var(--md-sys-color-error);
 }
 
 .status-label {
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
   font-weight: 500;
 }
 
 .status-val {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
 }
 
 .nav-actions {
@@ -192,33 +304,27 @@ body {
   gap: 8px;
 }
 
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Console Body */
+/* Console Body Layout */
 .console-body {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   max-width: 1540px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* Quick TCP/IP Connect Bar */
+/* M3 Quick Connect Bar */
 .quick-connect-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
-  padding: 12px 16px;
-  margin-bottom: 20px;
-  background-color: var(--panel-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  background-color: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 12px;
 }
 
 .section-tag-group {
@@ -228,45 +334,48 @@ body {
 }
 
 .section-tag {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: 0.01em;
 }
 
 .section-hint {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .connect-form {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
+/* M3 Outlined Field Group */
 .form-group-inline {
   display: flex;
   align-items: center;
-  background-color: var(--bg-base);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 8px;
   overflow: hidden;
-  transition: border-color 150ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .form-group-inline:focus-within {
-  border-color: var(--focus-ring);
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 1px var(--md-sys-color-primary);
 }
 
 .field-badge {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 11px;
-  font-weight: 700;
-  padding: 0 10px;
-  color: var(--text-secondary);
-  background-color: var(--panel-surface-sub);
-  border-right: 1px solid var(--border-color);
+  font-weight: 600;
+  padding: 0 12px;
+  color: var(--md-sys-color-on-surface-variant);
+  background-color: var(--md-sys-color-surface-container-high);
+  border-right: 1px solid var(--md-sys-color-outline-variant);
   height: 42px;
   display: inline-flex;
   align-items: center;
@@ -280,43 +389,42 @@ body {
   min-height: 42px;
   padding: 8px 12px;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  color: var(--md-sys-color-on-surface);
+  box-shadow: none;
 }
 
 .form-group-inline .input-text:focus {
   border-color: transparent;
   outline: none;
+  box-shadow: none;
 }
 
 .port-group {
   width: 140px;
 }
 
-/* Grid Layout */
+/* Two-Column Deck Layout */
 .deck-grid {
   display: grid;
-  grid-template-columns: minmax(320px, 1fr) minmax(360px, 480px);
-  gap: 20px;
+  grid-template-columns: minmax(320px, 1fr) minmax(380px, 480px);
+  gap: 24px;
   align-items: start;
 }
 
-.deck-col-left {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
+.deck-col-left,
 .deck-col-right {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
-/* Panels */
+/* M3 Card Panels */
 .panel {
-  background-color: var(--panel-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  background-color: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: var(--md-elevation-1);
 }
 
 .panel-header {
@@ -324,40 +432,41 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--panel-surface-sub);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface-container);
 }
 
 .panel-title-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .panel-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: 0.01em;
 }
 
 .counter-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
-  height: 20px;
+  min-width: 22px;
+  height: 22px;
   padding: 0 6px;
-  border-radius: 10px;
-  background-color: var(--badge-bg);
-  color: var(--badge-text);
+  border-radius: 11px;
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 11px;
   font-weight: 600;
 }
 
 .panel-content {
-  padding: 16px;
+  padding: 20px;
 }
 
 /* State Boxes: Empty, Loading, Error */
@@ -366,11 +475,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px 20px;
+  padding: 36px 20px;
   text-align: center;
-  border: 1px dashed var(--border-color);
-  border-radius: 4px;
-  background-color: var(--bg-base);
+  border: 1px dashed var(--md-sys-color-outline-variant);
+  border-radius: 12px;
+  background-color: var(--md-sys-color-surface);
 }
 
 .state-loading {
@@ -378,43 +487,44 @@ body {
 }
 
 .spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid var(--border-color);
-  border-top-color: var(--accent-blue);
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--md-sys-color-outline-variant);
+  border-top-color: var(--md-sys-color-primary);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: m3-spin 0.8s linear infinite;
 }
 
-@keyframes spin {
+@keyframes m3-spin {
   to { transform: rotate(360deg); }
 }
 
 .state-text {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .state-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   margin-bottom: 6px;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
 }
 
 .state-desc {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
   max-width: 440px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  line-height: 1.45;
 }
 
 .state-tips {
-  margin-top: 12px;
-  padding: 12px 16px;
-  background-color: var(--panel-surface);
-  border: 1px solid var(--border-sub);
-  border-radius: 4px;
+  margin-top: 14px;
+  padding: 14px 18px;
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 8px;
   text-align: left;
   max-width: 440px;
   width: 100%;
@@ -423,59 +533,63 @@ body {
 .tips-heading {
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 4px;
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 6px;
 }
 
 .tips-list {
-  padding-left: 18px;
+  padding-left: 20px;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.5;
 }
 
 .tips-list li {
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .state-error .state-title {
-  color: var(--accent-danger);
+  color: var(--md-sys-color-error);
 }
 
 /* Device List Cards */
 .device-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .device-filter-bar {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .input-sm {
   min-height: 38px;
-  font-size: 12px;
+  font-size: 13px;
   padding: 6px 12px;
 }
 
 .device-card {
-  padding: 14px 16px;
-  background-color: var(--panel-surface-sub);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  padding: 16px 18px;
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  gap: 14px;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  box-shadow: var(--md-elevation-1);
 }
 
 .device-card:hover {
-  border-color: var(--text-muted);
+  border-color: var(--md-sys-color-outline);
+  box-shadow: var(--md-elevation-2);
 }
 
 .device-card.selected {
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 1px var(--accent-blue);
+  border-color: var(--md-sys-color-primary);
+  background-color: var(--md-sys-color-surface-container-lowest);
+  box-shadow: 0 0 0 1px var(--md-sys-color-primary), var(--md-elevation-2);
 }
 
 .device-card-header {
@@ -490,56 +604,52 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .device-badge-kind {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 11px;
   font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background-color: var(--badge-bg);
-  color: var(--badge-text);
-  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border: 1px solid transparent;
 }
 
 .device-model {
   font-weight: 600;
   font-size: 14px;
+  color: var(--md-sys-color-on-surface);
 }
 
 .device-serial {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .device-status-badge {
   font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .status-device {
-  background-color: rgba(35, 134, 54, 0.15);
-  color: #3fb950;
-  border: 1px solid rgba(35, 134, 54, 0.4);
-}
-
-[data-theme="light"] .status-device {
-  background-color: rgba(26, 127, 55, 0.1);
-  color: #1a7f37;
-  border-color: rgba(26, 127, 55, 0.3);
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border: 1px solid transparent;
 }
 
 .status-unauthorized,
 .status-offline {
-  background-color: rgba(218, 54, 51, 0.15);
-  color: #f85149;
-  border: 1px solid rgba(218, 54, 51, 0.4);
+  background-color: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+  border: 1px solid transparent;
 }
 
 .device-meta-row {
@@ -547,34 +657,35 @@ body {
   flex-wrap: wrap;
   gap: 16px;
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .device-meta-item {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .device-meta-val {
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-weight: 500;
 }
 
 .device-toolbar {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-color);
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
 /* Session List Cards */
 .session-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .session-card {
@@ -582,11 +693,12 @@ body {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px 14px;
-  background-color: var(--panel-surface-sub);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 8px;
+  box-shadow: var(--md-elevation-1);
 }
 
 .session-info {
@@ -600,20 +712,21 @@ body {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-weight: 600;
   font-size: 13px;
+  color: var(--md-sys-color-on-surface);
 }
 
 .session-pid {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 11px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .session-duration {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
-/* Log Panel & Output */
+/* Process Activity Log Stream */
 .log-panel {
   display: flex;
   flex-direction: column;
@@ -623,45 +736,44 @@ body {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 10px;
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-  background-color: rgba(35, 134, 54, 0.2);
-  color: #3fb950;
-  border: 1px solid rgba(35, 134, 54, 0.5);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
 }
 
 .console-output {
-  height: 180px;
+  height: 200px;
   overflow-y: auto;
-  padding: 10px 14px;
-  background-color: var(--code-bg);
-  border-top: 1px solid var(--border-color);
+  padding: 12px 16px;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 12px;
-  line-height: 1.45;
-  color: var(--text-secondary);
+  line-height: 1.5;
+  color: var(--md-sys-color-on-surface-variant);
   user-select: text;
 }
 
 .log-line {
   word-break: break-all;
   white-space: pre-wrap;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .log-info {
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .log-session {
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
 }
 
 .log-error {
-  color: var(--accent-danger);
+  color: var(--md-sys-color-error);
 }
 
-/* Launcher Panel & Form */
+/* Launcher Configuration Panel */
 .target-device-indicator {
   display: flex;
   align-items: center;
@@ -670,108 +782,118 @@ body {
 }
 
 .target-label {
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .target-val {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-weight: 600;
-  color: var(--accent-blue);
+  color: var(--md-sys-color-primary);
 }
 
 .launcher-form {
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-sub);
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
 }
 
 .form-section:last-of-type {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .form-section-title {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  color: var(--md-sys-color-on-surface-variant);
 }
 
+/* M3 Filter Chips for Profiles */
 .preset-pill-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .preset-btn {
   font-family: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 4px;
-  background-color: var(--panel-surface-sub);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: 8px;
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface-variant);
+  border: 1px solid var(--md-sys-color-outline);
   cursor: pointer;
   min-height: 36px;
-  transition: all 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 180ms ease;
+  user-select: none;
 }
 
 .preset-btn:hover {
-  background-color: var(--border-color);
-  color: var(--text-primary);
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  border-color: var(--md-sys-color-on-surface-variant);
 }
 
 .preset-btn.active {
-  background-color: var(--accent-blue);
-  color: #ffffff;
-  border-color: var(--accent-blue);
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-color: var(--md-sys-color-secondary-container);
+  font-weight: 600;
 }
 
 .form-row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .field-group label {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
   font-weight: 500;
 }
 
+/* M3 Outlined Text Fields & Selects */
 .select-field,
 .input-text {
   font-family: inherit;
   font-size: 13px;
-  color: var(--text-primary);
-  background-color: var(--bg-base);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 8px 10px;
+  color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 8px;
+  padding: 8px 12px;
   min-height: 44px;
   width: 100%;
-  transition: border-color 150ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .select-field:focus,
 .input-text:focus {
-  border-color: var(--focus-ring);
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 1px var(--md-sys-color-primary);
   outline: none;
 }
 
@@ -781,32 +903,38 @@ body {
   gap: 10px;
 }
 
+.form-checkbox-row {
+  display: flex;
+  align-items: center;
+}
+
 .checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 13px;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
   cursor: pointer;
-  min-height: 44px;
+  min-height: 40px;
   user-select: none;
 }
 
 .checkbox-input {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--accent-blue);
+  width: 18px;
+  height: 18px;
+  accent-color: var(--md-sys-color-primary);
+  border-radius: 3px;
   cursor: pointer;
 }
 
 .command-preview-box {
-  padding: 10px 12px;
-  background-color: var(--code-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  padding: 12px 14px;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .command-preview-header {
@@ -820,105 +948,120 @@ body {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .btn-copy-cmd {
-  min-height: 28px;
-  padding: 2px 8px;
+  min-height: 30px;
+  padding: 4px 10px;
   font-size: 11px;
-  border-radius: 3px;
+  border-radius: 6px;
 }
 
 .preview-code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 12px;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
   word-break: break-all;
   white-space: pre-wrap;
 }
 
-/* Buttons */
+/* Material 3 Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   font-family: inherit;
   font-size: 13px;
   font-weight: 600;
-  padding: 8px 14px;
-  border-radius: 4px;
+  padding: 8px 18px;
+  border-radius: 20px;
   border: 1px solid transparent;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 40px;
   text-decoration: none;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 100ms ease;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 120ms ease;
+  user-select: none;
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: scale(0.98);
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.38;
   cursor: not-allowed;
 }
 
 .btn-sm {
   font-size: 12px;
-  padding: 4px 10px;
-  min-height: 36px;
+  padding: 4px 12px;
+  min-height: 34px;
+  border-radius: 17px;
 }
 
 .btn-lg {
   font-size: 14px;
-  padding: 10px 18px;
+  padding: 12px 24px;
   min-height: 48px;
+  border-radius: 24px;
 }
 
 .btn-block {
   width: 100%;
 }
 
+/* M3 Filled Button */
 .btn-primary {
-  background-color: var(--accent-green);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-color: transparent;
+  box-shadow: var(--md-elevation-1);
 }
 
 .btn-primary:hover:not(:disabled) {
   background-color: var(--accent-green-hover);
+  box-shadow: var(--md-elevation-2);
 }
 
+/* M3 Filled Tonal Button */
 .btn-secondary {
-  background-color: var(--panel-surface-sub);
-  color: var(--text-primary);
-  border-color: var(--border-color);
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  border-color: transparent;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--border-color);
+  background-color: var(--md-sys-color-surface-container-highest);
+  box-shadow: var(--md-elevation-1);
 }
 
+/* M3 Outlined Button */
 .btn-outline {
   background-color: transparent;
-  color: var(--text-primary);
-  border-color: var(--border-color);
+  color: var(--md-sys-color-primary);
+  border-color: var(--md-sys-color-outline);
 }
 
 .btn-outline:hover:not(:disabled) {
-  background-color: var(--panel-surface-sub);
+  background-color: var(--md-sys-color-surface-container);
+  border-color: var(--md-sys-color-primary);
 }
 
+/* M3 Error Tonal Button */
 .btn-danger {
-  background-color: var(--accent-danger);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+  border-color: transparent;
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: var(--accent-danger-hover);
+  background-color: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
 }
 
 .btn-close {
@@ -926,22 +1069,24 @@ body {
   border: none;
   font-size: 22px;
   line-height: 1;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
   cursor: pointer;
   padding: 6px;
-  border-radius: 4px;
-  min-width: 44px;
-  min-height: 44px;
+  border-radius: 50%;
+  min-width: 40px;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 150ms ease;
 }
 
 .btn-close:hover {
-  color: var(--text-primary);
+  background-color: var(--md-state-hover);
+  color: var(--md-sys-color-on-surface);
 }
 
-/* Modals */
+/* M3 Dialogs (Modals) */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -949,113 +1094,119 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
   z-index: 1000;
 }
 
 .modal-card {
-  background-color: var(--panel-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  background-color: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 28px;
   width: 100%;
-  max-width: 540px;
+  max-width: 560px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: var(--md-elevation-3);
 }
 
 .modal-card-lg {
-  max-width: 720px;
+  max-width: 740px;
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 18px;
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--panel-surface-sub);
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface-container-high);
 }
 
 .modal-title {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: -0.01em;
 }
 
 .modal-body {
-  padding: 18px;
+  padding: 24px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .modal-details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .spec-tile {
-  padding: 10px 12px;
-  background-color: var(--panel-surface-sub);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  padding: 12px 14px;
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .spec-label {
   font-size: 11px;
-  color: var(--text-secondary);
+  color: var(--md-sys-color-on-surface-variant);
   text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .spec-val {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--md-sys-color-on-surface);
 }
 
 .modal-subtitle {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 8px;
   display: block;
 }
 
 .hardware-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .hardware-power-ops {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border-sub);
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 12px 18px;
-  border-top: 1px solid var(--border-color);
-  background-color: var(--panel-surface-sub);
+  padding: 16px 24px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface-container-high);
 }
 
 .screenshot-wrapper {
   background-color: #000000;
-  border-radius: 4px;
+  border-radius: 12px;
   overflow: hidden;
   display: inline-block;
   max-width: 100%;
@@ -1068,50 +1219,50 @@ body {
   display: block;
 }
 
-/* Toast Notifications */
+/* M3 Snackbar Notifications */
 .toast-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 24px;
+  right: 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   z-index: 1100;
-  max-width: 360px;
+  max-width: 380px;
   width: 100%;
   pointer-events: none;
 }
 
 .toast {
-  padding: 12px 16px;
-  border-radius: 4px;
-  background-color: var(--panel-surface);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
+  padding: 14px 18px;
+  border-radius: 8px;
+  background-color: var(--md-sys-color-inverse-surface);
+  color: var(--md-sys-color-inverse-on-surface);
   font-size: 13px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  box-shadow: var(--md-elevation-3);
   pointer-events: auto;
-  animation: toastIn 150ms ease forwards;
+  animation: m3-toast-in 200ms cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
 .toast-success {
-  border-left: 4px solid var(--accent-green);
+  border-left: 4px solid var(--md-sys-color-primary);
 }
 
 .toast-error {
-  border-left: 4px solid var(--accent-danger);
+  border-left: 4px solid var(--md-sys-color-error);
 }
 
 .toast-info {
-  border-left: 4px solid var(--accent-blue);
+  border-left: 4px solid var(--md-sys-color-tertiary);
 }
 
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes m3-toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Responsive Media Queries */
+/* Responsive Rules */
 @media (max-width: 1024px) {
   .deck-grid {
     grid-template-columns: 1fr;
@@ -1122,6 +1273,7 @@ body {
   .top-nav {
     flex-direction: column;
     align-items: stretch;
+    padding: 12px 16px;
   }
 
   .nav-actions {
@@ -1142,13 +1294,12 @@ body {
   .modal-details-grid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .console-body {
+    padding: 16px;
+  }
+
+  .modal-card {
+    border-radius: 20px;
   }
 }
